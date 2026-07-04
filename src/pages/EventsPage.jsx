@@ -3,6 +3,7 @@ import { useLang } from '../App.jsx';
 import { Icon } from '../Icons.jsx';
 import { SEED_EVENTS } from '../events.js';
 import { loadCustom, loadRemoved, seedId } from '../storage.js';
+import Modal from '../components/Modal.jsx';
 
 // Eigene Veranstaltungen + Seed-Termine, abzüglich der im Admin ausgeblendeten.
 function allEvents() {
@@ -11,9 +12,40 @@ function allEvents() {
   return [...loadCustom(), ...seeds];
 }
 
+/* Detailansicht einer Veranstaltung: großes Bild (bzw. alle Bilder der
+   Veranstaltung), voller Text und — falls hinterlegt — ein PDF-Download.
+   Galerie-Einträge sind Strings oder { src, alt }-Objekte. */
+function EventDetail({ event, onClose }) {
+  const raw = event.images?.length ? event.images : (event.img ? [event.img] : []);
+  const imgs = raw.map((im, i) => typeof im === 'string'
+    ? { src: im, alt: i === 0 ? (event.alt || '') : `${event.title} — Bild ${i + 1}` }
+    : im);
+  return (
+    <Modal label={event.title} onClose={onClose}>
+      <div className="event-detail">
+        <div className="event-detail-head">
+          <span className="event-date">{event.date}</span>
+          {event.where && <span className="event-detail-where">{event.where}</span>}
+        </div>
+        <h3>{event.title}</h3>
+        <p>{event.text}</p>
+        {event.pdf && (
+          <a className="btn btn-orange event-detail-pdf" href={event.pdf} download>
+            <Icon id="i-pdf" /> {event.pdfLabel || 'PDF herunterladen'}
+          </a>
+        )}
+        {imgs.map((im) => (
+          <img key={im.src} src={im.src} alt={im.alt} loading="lazy" />
+        ))}
+      </div>
+    </Modal>
+  );
+}
+
 export default function EventsPage({ version }) {
   const { t } = useLang();
   const [filter, setFilter] = useState('future'); // Tab: 'future' | 'past'
+  const [detail, setDetail] = useState(null); // angeklickte Veranstaltung (Detail-Overlay)
   const list = allEvents().filter((e) => e.type === filter); // version-Prop erzwingt Re-Render nach Admin-Änderungen
 
   return (
@@ -58,7 +90,13 @@ export default function EventsPage({ version }) {
           ) : (
             <div className="events-grid">
               {list.map((e, i) => (
-                <article className="event-card" key={`${e.title}-${i}`}>
+                <article
+                  className="event-card event-card-clickable" key={`${e.title}-${i}`}
+                  role="button" tabIndex={0}
+                  aria-label={`${e.title} — ${t('ev_more')}`}
+                  onClick={() => setDetail(e)}
+                  onKeyDown={(ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); setDetail(e); } }}
+                >
                   <div className="event-img">
                     {e.img
                       ? <img src={e.img} alt={e.alt || ''} loading="lazy" />
@@ -69,6 +107,7 @@ export default function EventsPage({ version }) {
                     <h3>{e.title}</h3>
                     <div className="where">{e.where}</div>
                     <p>{e.text}</p>
+                    <span className="event-more">{t('ev_more')}</span>
                   </div>
                 </article>
               ))}
@@ -77,6 +116,9 @@ export default function EventsPage({ version }) {
           </div>
         </div>
       </div>
+
+      {/* Klick auf eine Karte öffnet die Detailansicht mit allen Bildern */}
+      {detail && <EventDetail event={detail} onClose={() => setDetail(null)} />}
     </section>
   );
 }

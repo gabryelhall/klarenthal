@@ -20,6 +20,7 @@ const MEMBERS = [
   ['i-home', 'm5_t', 'm5_p', null],
   ['i-kids', null, 'm6_p', 'KiEZ'],
   ['i-ball', null, 'm7_p', '1. SC Klarenthal'],
+  ['i-school', 'm9_t', 'm9_p', null],
   ['i-hands', 'm8_t', 'm8_p', null],
 ];
 
@@ -82,7 +83,7 @@ export default function WhoPage() {
           <h2 className="sec-title">{t('members_title')}</h2>
           <p className="sec-sub">{t('members_sub')}</p>
           <figure className="who-team">
-            <img src="assets/team-group.jpg" width="1200" height="900" alt="Engagierte Mitglieder der Initiative „Klarenthal lebt Demokratie“" loading="lazy" />
+            <img src="assets/100004598.jpeg" width="2048" height="1533" alt="Der Runde Tisch der Initiative „Klarenthal lebt Demokratie“ bei einem Treffen" loading="lazy" />
           </figure>
           <div className="members-grid">
             {MEMBERS.map(([icon, tk, pk, fixed], i) => (

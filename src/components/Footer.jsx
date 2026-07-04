@@ -13,8 +13,8 @@ export default function Footer({ onAdminClick, onPressClick, route }) {
             <p style={{ fontSize: '14.5px', maxWidth: 300 }}>{t('foot_claim')}</p>
             {/* Soziale Profile + Kontakt-Mail */}
             <div className="social-row">
-              <a href="https://www.instagram.com/klarenthal_lebt_demokratie/" target="https://www.instagram.com/klarenthal_lebt_demokratie/" rel="noopener noreferrer" aria-label="Instagram"><Icon id="i-insta" /></a>
-              <a href="https://www.facebook.com/groups/179073358903993/" target="https://www.facebook.com/groups/179073358903993/" rel="noopener noreferrer" aria-label="Facebook"><Icon id="i-fb" /></a>
+              <a href="https://www.instagram.com/klarenthal_lebt_demokratie/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Icon id="i-insta" /></a>
+              <a href="https://www.facebook.com/groups/179073358903993/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Icon id="i-fb" /></a>
               <a href="mailto:Dein_Gesicht_fuer_Demokratie@web.de" aria-label="E-Mail"><Icon id="i-mail" /></a>
             </div>
           </div>

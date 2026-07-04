@@ -3,6 +3,7 @@ import { useLang } from '../App.jsx';
 import { Icon } from '../Icons.jsx';
 import { loadPress } from '../storage.js';
 import { SEED_PRESS } from '../press.js';
+import { WEB3FORMS_KEY, CONTACT_EMAIL } from '../contact.js';
 
 // Spendendaten — PayPal-Adresse noch ersetzen, sobald das Konto eingerichtet ist.
 const IBAN = 'DE78 5105 0015 0138 0028 02';
@@ -13,7 +14,8 @@ const PAYPAL_URL = `https://www.paypal.com/donate?business=${encodeURIComponent(
 export default function InfoPage({ version }) {
   const { t } = useLang();
   const customPress = loadPress(); // version-Prop löst Re-Render nach Admin-Änderungen aus
-  const [sent, setSent] = useState(false);
+  // Formularzustand: null | 'sending' | 'sent' | 'mail' (mailto-Fallback) | 'error'
+  const [status, setStatus] = useState(null);
   const [copied, setCopied] = useState(false);
 
   // IBAN ohne Leerzeichen in die Zwischenablage; „Kopiert“-Hinweis kurz zeigen.
@@ -24,14 +26,54 @@ export default function InfoPage({ version }) {
     });
   };
 
-  // Kein Server: das Formular öffnet das Mailprogramm mit vorausgefüllter Nachricht.
-  const onSubmit = (e) => {
+  // Fallback ohne Versand-Key: öffnet das Mailprogramm mit vorausgefüllter
+  // Nachricht. Läuft über einen echten Link-Klick — eine Zuweisung an
+  // window.location wird von Browsern für externe Protokolle teils blockiert.
+  const openMailProgram = (f) => {
+    const body = encodeURIComponent(`Name: ${f.cName.value}\nE-Mail: ${f.cMail.value}\n\n${f.cMsg.value}`);
+    const a = document.createElement('a');
+    a.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Kontakt über die Webseite')}&body=${body}`;
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setStatus('mail');
+  };
+
+  // Mit Web3Forms-Key wird direkt aus dem Browser versendet — die Besucherin
+  // braucht kein eigenes E-Mail-Programm. Ohne Key greift der mailto-Fallback.
+  const onSubmit = async (e) => {
     e.preventDefault();
     const f = e.target;
-    const body = encodeURIComponent(`Name: ${f.cName.value}\nE-Mail: ${f.cMail.value}\n\n${f.cMsg.value}`);
-    window.location.href = `mailto:gabryel.hall@gmail.com?subject=${encodeURIComponent('Kontakt über die Webseite')}&body=${body}`;
-    setSent(true);
+    if (!WEB3FORMS_KEY) { openMailProgram(f); return; }
+    if (f.botcheck.checked) return; // Honeypot: nur Bots füllen dieses Feld
+    setStatus('sending');
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: 'Kontakt über die Webseite klarenthal.org',
+          from_name: 'Kontaktformular klarenthal.org',
+          name: f.cName.value,
+          email: f.cMail.value, // wird als Antwort-Adresse gesetzt
+          message: f.cMsg.value,
+        }),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message);
+      f.reset();
+      setStatus('sent');
+    } catch {
+      setStatus('error'); // Hinweis verweist auf die klickbare Adresse unterm Formular
+    }
   };
+
+  const STATUS_TEXT = { sending: 'f_sending', sent: 'f_sent', mail: 'f_ok', error: 'f_err' };
+
+  // Adresse im Hinweistext anklickbar machen (Fallback, falls kein Mailprogramm aufgeht).
+  const noteParts = t('f_note').split(CONTACT_EMAIL);
 
   return (
     <section className="page visible">
@@ -55,11 +97,22 @@ export default function InfoPage({ version }) {
               <input id="cMail" name="cMail" type="email" required autoComplete="email" />
               <label htmlFor="cMsg">{t('f_msg')}</label>
               <textarea id="cMsg" name="cMsg" required />
+              {/* Honeypot gegen Spam-Bots — unsichtbar, Menschen lassen es leer */}
+              <input className="form-botcheck" type="checkbox" name="botcheck" tabIndex={-1} aria-hidden="true" autoComplete="off" />
               <div style={{ marginTop: 24 }}>
-                <button className="btn btn-violett" type="submit">{t('f_send')}</button>
+                <button className="btn btn-violett" type="submit" disabled={status === 'sending'}>{t('f_send')}</button>
               </div>
-              <p className="form-note">{t('f_note')}</p>
-              <div className={`form-success${sent ? ' show' : ''}`} role="status" aria-live="polite">{t('f_ok')}</div>
+              <p className="form-note">
+                {noteParts[0]}
+                <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+                {noteParts[1] || ''}
+              </p>
+              <div
+                className={`form-success${status ? ' show' : ''}${status === 'error' ? ' form-error' : ''}${status === 'sending' ? ' form-sending' : ''}`}
+                role={status === 'error' ? 'alert' : 'status'} aria-live="polite"
+              >
+                {status && t(STATUS_TEXT[status])}
+              </div>
             </form>
           </div>
 
@@ -122,7 +175,9 @@ export default function InfoPage({ version }) {
             ))}
             {SEED_PRESS.map((p) => (
               <a className="press-item" href={p.href} download key={p.id}>
-                <div className="press-icon"><Icon id="i-news" /></div>
+                {p.img
+                  ? <img className="press-thumb" src={p.img} alt="" loading="lazy" />
+                  : <div className="press-icon"><Icon id="i-news" /></div>}
                 <div>
                   <h3>{p.translate ? t(p.titleKey) : p.title}</h3>
                   <p>{p.meta}</p>

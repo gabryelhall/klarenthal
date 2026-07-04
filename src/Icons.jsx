@@ -4,7 +4,7 @@ import {
   faLandmark, faChurch, faCheckToSlot, faBookOpenReader, faPeopleRoof,
   faChildren, faFutbol, faHandsHoldingCircle, faGlobe, faEnvelope,
   faNewspaper, faCalendarDays, faLock, faTrashCan, faPlus, faImage,
-  faFilePdf, faMasksTheater, faMobileScreenButton, faSeedling,
+  faFilePdf, faMasksTheater, faMobileScreenButton, faSeedling, faSchool,
 } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 
@@ -26,6 +26,7 @@ const ICONS = {
   'i-home': faPeopleRoof,            // Stadtteilzentrum (Treffpunkt)
   'i-kids': faChildren,              // KiEZ – Kinder & Jugend
   'i-ball': faFutbol,                // 1. SC Klarenthal
+  'i-school': faSchool,              // Klarenthaler Bildungseinrichtungen
   'i-hands': faHandsHoldingCircle,   // engagierte Zivilgesellschaft
   // Header / Footer
   'i-globe': faGlobe,                // Sprachwahl
