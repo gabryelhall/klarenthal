@@ -123,8 +123,12 @@ export default function StartPage() {
               <figcaption>Land Hessen</figcaption>
             </figure>
             <figure className="partner">
-              <div className="partner-logo"><img src="assets/partner-kiez.svg" alt="KiEZ – KinderElternZentren" loading="lazy" /></div>
-              <figcaption>KiEZ – KinderElternZentren</figcaption>
+              <div className="partner-logo"><img src="assets/naspa_logo_farbig_mit_uz_4c.png" alt="Naspa – Nassauische Sparkasse" loading="lazy" /></div>
+              <figcaption>Naspa – Nassauische Sparkasse</figcaption>
+            </figure>
+            <figure className="partner">
+              <div className="partner-logo"><img src="assets/Klarenthal_4c.jpg" alt="Ortsbeirat Klarenthal – Landeshauptstadt Wiesbaden" loading="lazy" /></div>
+              <figcaption>Ortsbeirat Klarenthal</figcaption>
             </figure>
             <figure className="partner">
               <div className="partner-logo"><img src="assets/partner-wsf.svg" alt="Wiesbaden Stiftung Freunde e.V." loading="lazy" /></div>

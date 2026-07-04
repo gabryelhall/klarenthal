@@ -1,5 +1,4 @@
 export default function ImpressumPage() {
-  const note = { fontSize: 13, color: '#9A8DB8' };
   return (
     <section className="page visible">
       <div className="page-hero"><div className="wrap"><h1>Impressum</h1></div></div>
@@ -8,18 +7,15 @@ export default function ImpressumPage() {
         <h2>Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)</h2>
         <p>
           <strong>Diensteanbieter / Träger:</strong><br />
-          Volksbildungswerk Klarenthal e.V.<br />
-          Geschwister-Scholl-Straße 10<br />
+          Initiative „Klarenthal lebt Demokratie“<br />
+          c/o Volksbildungswerk Klarenthal e.V.<br />
+          Carl-von-Ossietzky-Str. 53<br />
           65197 Wiesbaden
         </p>
         <p>
-          Diese Webseite wird vom Volksbildungswerk Klarenthal e.V. als Träger der
-          überparteilichen Initiative „Klarenthal lebt Demokratie“ — Runder Tisch für
-          Demokratieförderung — betrieben.
+          Diese Webseite wird von der überparteilichen Initiative „Klarenthal lebt
+          Demokratie“ — Runder Tisch für Demokratieförderung — betrieben.
         </p>
-
-        <h2>Vertreten durch</h2>
-        <p>Der Vorstand des Volksbildungswerk Klarenthal e.V. <span style={note}>[vollständige Namen der vertretungsberechtigten Vorstandsmitglieder ergänzen]</span></p>
 
         <h2>Kontakt</h2>
         <p>
@@ -28,15 +24,8 @@ export default function ImpressumPage() {
           Web: www.klarenthal.org
         </p>
 
-        <h2>Registereintrag</h2>
-        <p>
-          Eintragung im Vereinsregister.<br />
-          Registergericht: Amtsgericht Wiesbaden<br />
-          Registernummer: VR <span style={note}>[Vereinsregisternummer ergänzen]</span>
-        </p>
-
         <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-        <p>Sabine Betz, Runder Tisch „Klarenthal lebt Demokratie“ — Anschrift wie oben.</p>
+        <p>Christof Scherl, Runder Tisch „Klarenthal lebt Demokratie“ — Anschrift wie oben.</p>
 
         <h2>EU-Streitschlichtung</h2>
         <p>
@@ -80,12 +69,6 @@ export default function ImpressumPage() {
           Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
           Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors
           bzw. Erstellers.
-        </p>
-
-        <p style={note}>
-          Hinweis: Dies ist eine rechtskonforme Vorlage. Die mit [Klammern] markierten Pflichtangaben
-          (Vorstandsnamen, Vereinsregisternummer) sind durch die Initiative zu ergänzen und vor
-          Veröffentlichung durch das Volksbildungswerk Klarenthal e.V. final zu prüfen.
         </p>
 
       </div></div>

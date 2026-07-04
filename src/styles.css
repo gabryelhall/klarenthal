@@ -427,6 +427,10 @@ header{
   padding:16px 20px;font-weight:600;font-size:15px;margin-top:18px;
 }
 .form-success.show{display:block}
+.form-success.form-error{background:#FBE4DC;color:#A32C0C}
+.form-success.form-sending{background:#EFEAF8;color:var(--violett)}
+/* Honeypot gegen Spam-Bots — für Menschen unsichtbar */
+.form-botcheck{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 
 .donate-card{
   background:var(--violett);color:var(--mineral);border-radius:var(--radius);padding:36px;
@@ -521,6 +525,20 @@ footer{background:var(--violett);color:#CFC4E8;padding:56px 0 36px;border-top:6p
 .img-remove:hover{background:#F5C9C9}
 .img-status{font-size:13px;color:var(--ink-soft);margin-top:8px}
 .img-status.err{color:#A32D2D;font-weight:600}
+
+/* Galerie mehrerer gewählter Bilder im Veranstaltungs-Admin */
+.img-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px;margin-bottom:12px}
+.img-thumb{position:relative;border-radius:8px;overflow:hidden;box-shadow:var(--shadow);aspect-ratio:1/1;background:var(--mineral)}
+.img-thumb img{width:100%;height:100%;object-fit:cover}
+.img-badge{position:absolute;left:4px;bottom:4px;background:var(--violett);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px}
+.img-thumb-del{
+  position:absolute;top:4px;right:4px;width:24px;height:24px;border:none;border-radius:50%;
+  background:rgba(28,15,56,.72);color:#fff;font-size:16px;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.img-thumb-del:hover{background:var(--orange)}
+[dir="rtl"] .img-thumb-del{right:auto;left:4px}
+[dir="rtl"] .img-badge{left:auto;right:4px}
 .pdf-file{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--violett);pointer-events:none}
 .pdf-file .icon{font-size:34px;color:var(--orange)}
 .pdf-file strong{font-size:14px;word-break:break-all;max-width:100%;text-align:center}
@@ -568,8 +586,10 @@ footer{background:var(--violett);color:#CFC4E8;padding:56px 0 36px;border-top:6p
 .story-text p strong{color:var(--violett)}
 
 /* Team-Foto im Mitglieder-Bereich (WhoPage) */
-.who-team{margin:0 0 32px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);max-height:440px}
-.who-team img{width:100%;height:100%;object-fit:cover}
+/* Feste Höhe, damit object-fit/-position wirklich greifen — der Ausschnitt
+   liegt auf der unteren Bildhälfte, wo die Menschen am Tisch sitzen. */
+.who-team{margin:0 0 32px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);height:clamp(280px,44vw,440px)}
+.who-team img{width:100%;height:100%;object-fit:cover;object-position:50% 72%}
 
 /* Foto-Galerie „Impressionen“ (StartPage) */
 .impressions{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:14px}
@@ -599,3 +619,39 @@ footer{background:var(--violett);color:#CFC4E8;padding:56px 0 36px;border-top:6p
 
 /* React: nur die aktive Seite wird gerendert */
 .page.visible{display:block}
+
+/* ============================================================
+   VERANSTALTUNGS-DETAIL — Karten sind anklickbar und öffnen
+   ein Overlay mit allen Bildern der jeweiligen Aktion
+   ============================================================ */
+.event-card-clickable{cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+.event-card-clickable:hover,.event-card-clickable:focus-visible{transform:translateY(-4px);box-shadow:0 10px 34px rgba(50,21,100,.18)}
+.event-more{
+  font-family:var(--accent-face);font-size:12.5px;font-weight:600;letter-spacing:.04em;
+  color:var(--violett);margin-top:auto;
+}
+.event-card-clickable:hover .event-more{text-decoration:underline}
+.event-detail h3{font-size:24px;font-weight:900;color:var(--violett);line-height:1.25;margin-bottom:12px}
+.event-detail p{font-size:15.5px;color:var(--ink-soft);margin-bottom:18px}
+.event-detail-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.event-detail-head .event-date{position:static}
+.event-detail-where{font-family:var(--accent-face);font-size:12.5px;font-weight:500;color:var(--orange);letter-spacing:.04em}
+.event-detail img{width:100%;border-radius:var(--radius-sm);box-shadow:var(--shadow);margin-bottom:14px}
+.event-detail-pdf{margin-bottom:18px}
+
+/* Pressemitteilung mit Foto: kleines Vorschaubild statt Icon */
+.press-thumb{
+  width:76px;height:56px;border-radius:var(--radius-sm);flex-shrink:0;
+  object-fit:cover;box-shadow:var(--shadow);
+}
+
+/* Instagram-Link oben im Header — auf Desktop und Mobil immer sichtbar */
+.nav-links{margin-inline-start:auto}
+.nav-insta{
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  width:40px;height:40px;border-radius:50%;border:2px solid var(--violett);
+  color:var(--violett);font-size:18px;text-decoration:none;
+  transition:background .15s,color .15s;
+}
+.nav-insta:hover{background:var(--violett);color:var(--gelb)}
+@media(max-width:900px){.nav-insta{margin-inline-start:auto}}

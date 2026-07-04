@@ -42,6 +42,16 @@ export default function Header({ route, onLangClick }) {
             </button>
           </li>
         </ul>
+        {/* Instagram direkt oben in der Leiste — schneller Weg zum Profil */}
+        <a
+          className="nav-insta"
+          href="https://www.instagram.com/klarenthal_lebt_demokratie/"
+          target="_blank" rel="noopener noreferrer"
+          aria-label="Instagram — klarenthal_lebt_demokratie"
+          title="Instagram"
+        >
+          <Icon id="i-insta" />
+        </a>
         {/* Hamburger nur mobil sichtbar (CSS) — klappt die Navigation auf */}
         <button
           className="burger"
