@@ -16,7 +16,7 @@ import DatenschutzPage from './pages/DatenschutzPage.jsx';
 const ROUTES = ['start', 'wer-wir-sind', 'ziele', 'veranstaltungen', 'informationen', 'impressum', 'datenschutz'];
 
 const TITLES = {
-  start: 'Klarenthal lebt Demokratie | Initiative für demokratische Werte in Wiesbaden',
+  start: 'Klarenthal lebt Demokratie | Initiative in Wiesbaden',
   'wer-wir-sind': 'Wer wir sind | Klarenthal lebt Demokratie',
   ziele: 'Unsere Ziele | Klarenthal lebt Demokratie',
   veranstaltungen: 'Veranstaltungen & Projekte | Klarenthal lebt Demokratie',
@@ -29,6 +29,8 @@ const LangContext = createContext({ lang: 'de', t: (k) => k, setLang: () => {} }
 export const useLang = () => useContext(LangContext);
 
 function currentRoute() {
+  // Beim Prerendering (Node, kein window) immer die Startseite ausliefern.
+  if (typeof window === 'undefined') return 'start';
   const r = window.location.hash.replace('#/', '') || 'start';
   return ROUTES.includes(r) ? r : 'start';
 }
