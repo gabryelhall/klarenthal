@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="22" fill="#321564"/>
+  <g transform="translate(15,26) scale(0.70)" fill="#ffffff">
+    <path fill-rule="evenodd" d="
+      M7 16 h18 a5 5 0 0 1 5 5 v45 h-8 v-9 a6 6 0 0 0 -12 0 v9 H2 V21 a5 5 0 0 1 5 -5 Z
+      M8 25 h16 v6 H8 Z
+      M8 39 h16 v6 H8 Z
+      M39 2 h18 a5 5 0 0 1 5 5 v59 h-8 v-9 a6 6 0 0 0 -12 0 v9 h-8 V7 a5 5 0 0 1 5 -5 Z
+      M41 11 h9 v13 h-9 Z
+      M41 30 h12 v5 H41 Z
+      M64 66 V37 L81 21 L98 37 V66 h-11 v-9 a6 6 0 0 0 -12 0 v9 Z"/>
+  </g>
+</svg>
