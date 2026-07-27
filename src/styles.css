@@ -639,6 +639,16 @@ footer{background:var(--violett);color:#CFC4E8;padding:56px 0 36px;border-top:6p
 .event-detail img{width:100%;border-radius:var(--radius-sm);box-shadow:var(--shadow);margin-bottom:14px}
 .event-detail-pdf{margin-bottom:18px}
 
+/* Förderer-Hinweis in der Detailansicht („Mit Unterstützung von“ + Logo) */
+.event-detail .event-support{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;margin-bottom:18px}
+.event-detail .event-support span{font-size:15.5px;color:var(--ink-soft)}
+.event-detail .event-support img{width:160px;max-width:48%;border-radius:0;box-shadow:none;margin-bottom:0}
+
+/* Förderhinweis unter der Veranstaltungsliste (Demokratiewoche 2026) */
+.ev-support{margin-top:56px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px 20px;text-align:center}
+.ev-support span{font-family:var(--display);font-weight:700;font-size:16px;color:var(--violett)}
+.ev-support img{width:clamp(160px,22vw,210px)}
+
 /* Pressemitteilung mit Foto: kleines Vorschaubild statt Icon */
 .press-thumb{
   width:76px;height:56px;border-radius:var(--radius-sm);flex-shrink:0;

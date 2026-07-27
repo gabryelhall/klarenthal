@@ -29,6 +29,13 @@ function EventDetail({ event, onClose }) {
         </div>
         <h3>{event.title}</h3>
         <p>{event.text}</p>
+        {/* Förderer-Hinweis (z.B. „Mit Unterstützung von“ + Logo) */}
+        {event.support && (
+          <div className="event-support">
+            <span>{event.support.text}</span>
+            <img src={event.support.logo} alt={event.support.logoAlt || ''} loading="lazy" />
+          </div>
+        )}
         {event.pdf && (
           <a className="btn btn-orange event-detail-pdf" href={event.pdf} download>
             <Icon id="i-pdf" /> {event.pdfLabel || 'PDF herunterladen'}
@@ -113,6 +120,12 @@ export default function EventsPage({ version }) {
               ))}
             </div>
           )}
+          </div>
+
+          {/* Förderhinweis: Die Demokratiewoche 2026 wird unterstützt von B90/Die Grünen Wiesbaden */}
+          <div className="ev-support">
+            <span>{t('ev_support')}</span>
+            <img src="assets/logo_b90_gruene_wiesbaden.png" alt="Logo: Bündnis 90/Die Grünen Wiesbaden" loading="lazy" />
           </div>
         </div>
       </div>
