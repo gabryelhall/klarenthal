@@ -113,6 +113,7 @@ export const I18N = {
     ev_empty_t: "Neue Veranstaltungen sind in Planung.",
     ev_empty_p: "Schau bald wieder vorbei oder folge uns auf Instagram und Facebook, um nichts zu verpassen.",
     ev_more: "Mehr erfahren",
+    ev_support: "Die Demokratiewoche 2026 wird unterstützt von",
 
     // Weitere Informationen
     info_eyebrow: "Weitere Informationen",
@@ -254,6 +255,7 @@ export const I18N = {
     ev_empty_t: "New events are being planned.",
     ev_empty_p: "Check back soon or follow us on Instagram and Facebook so you don’t miss anything.",
     ev_more: "Learn more",
+    ev_support: "The Democracy Week 2026 is supported by",
 
     // Weitere Informationen
     info_eyebrow: "More information",
@@ -395,6 +397,7 @@ export const I18N = {
     ev_empty_t: "Нові заходи плануються.",
     ev_empty_p: "Завітайте згодом або підпишіться на наш Instagram і Facebook, щоб нічого не пропустити.",
     ev_more: "Докладніше",
+    ev_support: "Тиждень демократії 2026 відбувається за підтримки",
 
     // Weitere Informationen
     info_eyebrow: "Додаткова інформація",
@@ -536,6 +539,7 @@ export const I18N = {
     ev_empty_t: "Новые мероприятия планируются.",
     ev_empty_p: "Загляните позже или подпишитесь на наш Instagram и Facebook, чтобы ничего не пропустить.",
     ev_more: "Подробнее",
+    ev_support: "Неделя демократии 2026 проходит при поддержке",
 
     // Weitere Informationen
     info_eyebrow: "Дополнительная информация",
@@ -677,6 +681,7 @@ export const I18N = {
     ev_empty_t: "فعاليات جديدة قيد التخطيط.",
     ev_empty_p: "عد قريبًا أو تابعنا على إنستغرام وفيسبوك حتى لا يفوتك شيء.",
     ev_more: "اعرف المزيد",
+    ev_support: "يُقام أسبوع الديمقراطية 2026 بدعم من",
 
     // Weitere Informationen
     info_eyebrow: "معلومات إضافية",
@@ -818,6 +823,7 @@ export const I18N = {
     ev_empty_t: "Yeni etkinlikler planlanıyor.",
     ev_empty_p: "Yakında tekrar uğra veya hiçbir şeyi kaçırmamak için bizi Instagram ve Facebook'ta takip et.",
     ev_more: "Daha fazla bilgi",
+    ev_support: "Demokrasi Haftası 2026'nın destekçisi",
 
     // Weitere Informationen
     info_eyebrow: "Daha fazla bilgi",
@@ -959,6 +965,7 @@ export const I18N = {
     ev_empty_t: "رویدادهای جدید در حال برنامه‌ریزی است.",
     ev_empty_p: "به‌زودی دوباره سر بزن یا ما را در اینستاگرام و فیسبوک دنبال کن تا چیزی را از دست ندهی.",
     ev_more: "بیشتر بدانید",
+    ev_support: "هفته دموکراسی ۲۰۲۶ با حمایت",
 
     // Weitere Informationen
     info_eyebrow: "اطلاعات بیشتر",
