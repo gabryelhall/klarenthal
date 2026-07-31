@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, createContext, useContext } from 'react';
 import { I18N } from './i18n.js';
+import { refreshData } from './storage.js';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import LangModal from './components/LangModal.jsx';
@@ -50,6 +51,14 @@ export default function App() {
     const onHash = () => { setRoute(currentRoute()); window.scrollTo({ top: 0 }); };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  // Beim Start die aktuellen Inhalte vom Backend holen. Schlägt das fehl,
+  // bleiben der lokale Cache bzw. die fest eingebauten Seed-Daten sichtbar.
+  useEffect(() => {
+    refreshData()
+      .then(() => { setEventsVersion((v) => v + 1); setPressVersion((v) => v + 1); })
+      .catch((err) => console.warn('Inhalte konnten nicht vom Server geladen werden:', err?.message || err));
   }, []);
 
   useEffect(() => { document.title = TITLES[route]; }, [route]);

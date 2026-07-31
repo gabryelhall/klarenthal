@@ -1,22 +1,21 @@
 import { useState } from 'react';
 import { Icon } from '../Icons.jsx';
 import { SEED_EVENTS } from '../events.js';
-import { loadCustom, loadRemoved, saveCustom, saveRemoved, seedId } from '../storage.js';
+import { loadCustom, loadRemoved, addEvent, deleteEvent, hideSeed, uploadImage, seedId } from '../storage.js';
 import Modal from './Modal.jsx';
-import PinGate from './PinGate.jsx';
+import LoginGate from './LoginGate.jsx';
 import FileDrop from './FileDrop.jsx';
 
-/* PIN ändern: hier anpassen (gleiche PIN wie der Presse-Admin). */
-const ADMIN_PIN = '2420';
-/* Längste Bildkante in Pixel — verkleinert große Uploads, damit sie nicht
-   die localStorage-Quota sprengen. */
-const MAX_EDGE = 1000;
+/* Längste Bildkante in Pixel — verkleinert große Uploads vor dem Hochladen. */
+const MAX_EDGE = 1600;
 
 export default function AdminModal({ open, onClose, onChanged }) {
   const [unlocked, setUnlocked] = useState(false);
   const [saved, setSaved] = useState(false);
-  // Die Listen leben in localStorage, nicht im State — dieser Zähler erzwingt
-  // nach jeder Änderung ein Neu-Rendern (hier und auf der Veranstaltungsseite).
+  const [saving, setSaving] = useState(false);
+  // Die Listen leben im Daten-Snapshot (storage.js), nicht im State — dieser
+  // Zähler erzwingt nach jeder Änderung ein Neu-Rendern (hier und auf der
+  // Veranstaltungsseite).
   const [, force] = useState(0);
   const refresh = () => { force((n) => n + 1); onChanged(); };
 
@@ -74,27 +73,30 @@ export default function AdminModal({ open, onClose, onChanged }) {
   // Verwaltbare Liste: eigene Veranstaltungen zuerst, dann die noch nicht
   // ausgeblendeten zukünftigen Seed-Termine.
   const rows = [
-    ...loadCustom().map((e, i) => ({ title: e.title, date: e.date, custom: true, idx: i })),
+    ...loadCustom().map((e) => ({ title: e.title, date: e.date, custom: true, id: e.id })),
     ...SEED_EVENTS
       .filter((e) => e.type === 'future' && !loadRemoved().includes(seedId(e)))
       .map((e) => ({ title: e.title, date: e.date, custom: false, sid: seedId(e) })),
   ];
 
-  const removeRow = (r) => {
+  const removeRow = async (r) => {
     if (!window.confirm(`„${r.title}“ wirklich entfernen?`)) return;
-    if (r.custom) {
-      const list = loadCustom();
-      list.splice(r.idx, 1);
-      saveCustom(list);
-    } else {
-      // Seed-Termine löschen wir nicht, wir merken sie uns nur als ausgeblendet.
-      saveRemoved([...loadRemoved(), r.sid]);
+    try {
+      if (r.custom) {
+        await deleteEvent(r.id);
+      } else {
+        // Seed-Termine löschen wir nicht, wir merken sie nur als ausgeblendet.
+        await hideSeed(r.sid);
+      }
+      refresh();
+    } catch {
+      window.alert('Entfernen fehlgeschlagen — bitte Internetverbindung prüfen und erneut versuchen.');
     }
-    refresh();
   };
 
-  const onAdd = (e) => {
+  const onAdd = async (e) => {
     e.preventDefault();
+    if (saving) return;
     const f = e.target;
     const ev = {
       type: 'future',
@@ -104,39 +106,44 @@ export default function AdminModal({ open, onClose, onChanged }) {
       text: f.aText.value.trim(),
       custom: true,
     };
-    // Erstes Bild ist das Kachelbild, alle Bilder landen in der Detail-Galerie.
-    if (imgList.length) {
-      ev.img = imgList[0];
-      ev.alt = ev.title;
-      ev.images = imgList.map((src, i) => ({ src, alt: `${ev.title} — Bild ${i + 1}` }));
-    }
-
-    if (!saveCustom([ev, ...loadCustom()])) {
-      setImgError('Speicher voll — bitte weniger oder kleinere Bilder wählen.');
-      return;
-    }
-    f.reset();
-    setImgList([]);
+    setSaving(true);
     setImgError('');
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3500);
-    refresh();
+    try {
+      // Bilder erst jetzt hochladen; gespeichert werden nur ihre URLs.
+      // Erstes Bild ist das Kachelbild, alle Bilder landen in der Detail-Galerie.
+      if (imgList.length) {
+        const urls = [];
+        for (const dataUrl of imgList) urls.push(await uploadImage(dataUrl));
+        ev.img = urls[0];
+        ev.alt = ev.title;
+        ev.images = urls.map((src, i) => ({ src, alt: `${ev.title} — Bild ${i + 1}` }));
+      }
+      await addEvent(ev);
+      f.reset();
+      setImgList([]);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3500);
+      refresh();
+    } catch {
+      setImgError('Speichern fehlgeschlagen — bitte Internetverbindung prüfen und erneut versuchen.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
     <Modal label="Veranstaltungen verwalten" onClose={onClose}>
       {!unlocked ? (
-        <PinGate
-          pin={ADMIN_PIN}
-          prompt="Bitte 4-stellige PIN eingeben, um Veranstaltungen zu verwalten."
+        <LoginGate
+          prompt="Bitte Admin-Passwort eingeben, um Veranstaltungen zu verwalten."
           onUnlock={() => setUnlocked(true)}
         />
       ) : (
         <div>
           <h3><Icon id="i-cal" /> Veranstaltungen verwalten</h3>
           <p className="admin-sub">
-            Zukünftige Veranstaltungen hinzufügen oder entfernen. Änderungen werden sofort auf der
-            Webseite sichtbar und in diesem Browser gespeichert.
+            Zukünftige Veranstaltungen hinzufügen oder entfernen. Änderungen werden zentral
+            gespeichert und sind sofort für alle Besucher der Webseite sichtbar.
           </p>
 
           {/* Bestehende zukünftige Veranstaltungen zum Entfernen */}
@@ -206,8 +213,11 @@ export default function AdminModal({ open, onClose, onChanged }) {
               {imgError && <p className="img-status err">{imgError}</p>}
 
               <div style={{ marginTop: 18 }}>
-                <button className="btn btn-violett" type="submit" style={{ fontSize: '14.5px', padding: '12px 24px' }}>
-                  Veranstaltung speichern
+                <button
+                  className="btn btn-violett" type="submit" disabled={saving || imgBusy}
+                  style={{ fontSize: '14.5px', padding: '12px 24px' }}
+                >
+                  {saving ? 'Wird gespeichert …' : 'Veranstaltung speichern'}
                 </button>
               </div>
               <div className={`admin-saved${saved ? ' show' : ''}`} role="status" aria-live="polite">

@@ -50,12 +50,18 @@ export default function DatenschutzPage() {
           gelöscht, sobald sie für die Erreichung des Zwecks nicht mehr erforderlich sind.
         </p>
 
-        <h2>5. Lokale Speicherung (Verwaltungsfunktion)</h2>
+        <h2>5. Veranstaltungs- und Presseinhalte (Supabase)</h2>
         <p>
-          Die interne Verwaltungsfunktion für Veranstaltungen speichert Inhalte ausschließlich
-          lokal im Browser des verwendeten Geräts (localStorage). Es findet keine Übertragung
-          dieser Daten an Server oder Dritte statt. Es werden dabei keine personenbezogenen Daten
-          von Besucherinnen und Besuchern verarbeitet.
+          Die auf dieser Webseite gepflegten Veranstaltungen und Pressemitteilungen werden über
+          den Dienst Supabase gespeichert und ausgeliefert (Anbieter: Supabase, Inc.;
+          Datenhaltung in der EU, Region Frankfurt am Main). Beim Aufruf der Seite werden diese
+          Inhalte von dort geladen; dabei wird technisch bedingt die IP-Adresse des aufrufenden
+          Geräts an Supabase übermittelt. Die Zugangsdaten der Verwaltungsfunktion betreffen
+          ausschließlich die Redaktion; von Besucherinnen und Besuchern werden keine
+          personenbezogenen Daten gespeichert. Zusätzlich legt die Seite eine Kopie der
+          geladenen Inhalte im Browser ab (localStorage), damit sie schneller angezeigt werden
+          können. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an
+          einem technisch sicheren und aktuellen Betrieb der Webseite).
         </p>
 
         <h2>6. Spendenfunktion</h2>

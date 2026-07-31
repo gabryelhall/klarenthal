@@ -1,28 +1,24 @@
 import { useState } from 'react';
 import { Icon } from '../Icons.jsx';
-import { loadPress, savePress } from '../storage.js';
+import { loadPress, addPress, deletePress } from '../storage.js';
 import Modal from './Modal.jsx';
-import PinGate from './PinGate.jsx';
+import LoginGate from './LoginGate.jsx';
 import FileDrop from './FileDrop.jsx';
 
-/* PIN ändern: hier anpassen (gleiche PIN wie der Veranstaltungs-Admin). */
-const ADMIN_PIN = '2420';
-/* Obergrenze fürs PDF — größere Dateien passen nicht zuverlässig in den
-   localStorage-Speicher des Browsers. */
-const MAX_MB = 4;
+/* Obergrenze fürs PDF — schont Speicherplatz und Ladezeiten. */
+const MAX_MB = 10;
 
 export default function PressModal({ open, onClose, onChanged }) {
   const [unlocked, setUnlocked] = useState(false);
   const [saved, setSaved] = useState(false);
-  // localStorage statt State — Zähler erzwingt das Neu-Rendern nach Änderungen.
+  const [saving, setSaving] = useState(false);
+  // Die Liste lebt im Daten-Snapshot (storage.js) — Zähler erzwingt das
+  // Neu-Rendern nach Änderungen.
   const [, force] = useState(0);
   const refresh = () => { force((n) => n + 1); onChanged(); };
 
-  // PDF-Upload: wird als Data-URL gespeichert (Name/Größe nur für die Anzeige).
-  const [pdfData, setPdfData] = useState(null);
-  const [pdfName, setPdfName] = useState('');
-  const [pdfSize, setPdfSize] = useState(0);
-  const [pdfBusy, setPdfBusy] = useState(false);
+  // Ausgewählte PDF-Datei; hochgeladen wird erst beim Speichern.
+  const [pdfFile, setPdfFile] = useState(null);
   const [pdfError, setPdfError] = useState('');
 
   const processFile = (file) => {
@@ -30,62 +26,66 @@ export default function PressModal({ open, onClose, onChanged }) {
     const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
     if (!isPdf) { setPdfError('Bitte eine PDF-Datei auswählen.'); return; }
     if (file.size > MAX_MB * 1024 * 1024) {
-      setPdfError(`PDF zu groß (max. ~${MAX_MB} MB für die Browser-Speicherung).`);
+      setPdfError(`PDF zu groß (max. ~${MAX_MB} MB).`);
       return;
     }
-    setPdfError(''); setPdfBusy(true);
-
-    const reader = new FileReader();
-    reader.onload = () => { setPdfData(reader.result); setPdfName(file.name); setPdfSize(file.size); setPdfBusy(false); };
-    reader.onerror = () => { setPdfBusy(false); setPdfError('Datei konnte nicht gelesen werden.'); };
-    reader.readAsDataURL(file);
+    setPdfError('');
+    setPdfFile(file);
   };
 
-  const clearFile = () => { setPdfData(null); setPdfName(''); setPdfSize(0); };
+  const clearFile = () => setPdfFile(null);
 
   if (!open) return null;
 
-  const rows = loadPress().map((p, i) => ({ title: p.title, date: p.date, idx: i }));
+  const rows = loadPress();
 
-  const removeRow = (r) => {
-    if (!window.confirm(`„${r.title}“ wirklich entfernen?`)) return;
-    const list = loadPress();
-    list.splice(r.idx, 1);
-    savePress(list);
-    refresh();
+  const removeRow = async (p) => {
+    if (!window.confirm(`„${p.title}“ wirklich entfernen?`)) return;
+    try {
+      await deletePress(p);
+      refresh();
+    } catch {
+      window.alert('Entfernen fehlgeschlagen — bitte Internetverbindung prüfen und erneut versuchen.');
+    }
   };
 
-  const onAdd = (e) => {
+  const onAdd = async (e) => {
     e.preventDefault();
-    const title = e.target.pTitle.value.trim();
+    if (saving) return;
+    const f = e.target;
+    const title = f.pTitle.value.trim();
     if (!title) { setPdfError('Bitte einen Titel eingeben.'); return; }
-    if (!pdfData) { setPdfError('Bitte eine PDF-Datei hochladen.'); return; }
+    if (!pdfFile) { setPdfError('Bitte eine PDF-Datei hochladen.'); return; }
 
-    const item = { title, pdf: pdfData, date: new Date().toLocaleDateString('de-DE') };
-    if (!savePress([item, ...loadPress()])) { setPdfError('Speicher voll — bitte ein kleineres PDF wählen.'); return; }
-
-    e.target.reset();
-    clearFile();
+    setSaving(true);
     setPdfError('');
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3500);
-    refresh();
+    try {
+      await addPress({ title, date: new Date().toLocaleDateString('de-DE'), file: pdfFile });
+      f.reset();
+      clearFile();
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3500);
+      refresh();
+    } catch {
+      setPdfError('Speichern fehlgeschlagen — bitte Internetverbindung prüfen und erneut versuchen.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
     <Modal label="Pressemitteilungen verwalten" onClose={onClose}>
       {!unlocked ? (
-        <PinGate
-          pin={ADMIN_PIN}
-          prompt="Bitte 4-stellige PIN eingeben, um Pressemitteilungen zu verwalten."
+        <LoginGate
+          prompt="Bitte Admin-Passwort eingeben, um Pressemitteilungen zu verwalten."
           onUnlock={() => setUnlocked(true)}
         />
       ) : (
         <div>
           <h3><Icon id="i-news" /> Pressemitteilungen verwalten</h3>
           <p className="admin-sub">
-            Pressemitteilungen als PDF hochladen. Sie erscheinen sofort unter „Weitere Informationen“
-            und können dort heruntergeladen werden. Gespeichert in diesem Browser.
+            Pressemitteilungen als PDF hochladen. Sie werden zentral gespeichert und erscheinen
+            sofort für alle Besucher unter „Weitere Informationen“ zum Herunterladen.
           </p>
 
           {/* Bereits hochgeladene eigene Mitteilungen zum Entfernen */}
@@ -95,13 +95,13 @@ export default function PressModal({ open, onClose, onChanged }) {
                 Noch keine eigenen Pressemitteilungen hochgeladen.
               </p>
             )}
-            {rows.map((r, i) => (
-              <div className="admin-row" key={i}>
+            {rows.map((p, i) => (
+              <div className="admin-row" key={p.id || i}>
                 <div className="meta">
-                  <strong>{r.title}</strong>
-                  <span>{r.date} · PDF</span>
+                  <strong>{p.title}</strong>
+                  <span>{p.date} · PDF</span>
                 </div>
-                <button className="btn-del" aria-label="Pressemitteilung löschen" title="Löschen" onClick={() => removeRow(r)}>
+                <button className="btn-del" aria-label="Pressemitteilung löschen" title="Löschen" onClick={() => removeRow(p)}>
                   <Icon id="i-trash" />
                 </button>
               </div>
@@ -119,14 +119,14 @@ export default function PressModal({ open, onClose, onChanged }) {
               <FileDrop
                 accept="application/pdf,.pdf"
                 label="PDF hochladen — hierher ziehen oder klicken zum Auswählen"
-                hasFile={!!pdfData}
+                hasFile={!!pdfFile}
                 onFile={processFile}
               >
-                {pdfData ? (
+                {pdfFile ? (
                   <div className="pdf-file">
                     <Icon id="i-pdf" />
-                    <strong>{pdfName}</strong>
-                    <span>{Math.round(pdfSize / 1024)} KB</span>
+                    <strong>{pdfFile.name}</strong>
+                    <span>{Math.round(pdfFile.size / 1024)} KB</span>
                     <button type="button" className="img-remove" onClick={(e) => { e.stopPropagation(); clearFile(); }}>
                       Datei entfernen
                     </button>
@@ -139,12 +139,14 @@ export default function PressModal({ open, onClose, onChanged }) {
                   </div>
                 )}
               </FileDrop>
-              {pdfBusy && <p className="img-status">PDF wird verarbeitet …</p>}
               {pdfError && <p className="img-status err">{pdfError}</p>}
 
               <div style={{ marginTop: 18 }}>
-                <button className="btn btn-violett" type="submit" style={{ fontSize: '14.5px', padding: '12px 24px' }}>
-                  Pressemitteilung speichern
+                <button
+                  className="btn btn-violett" type="submit" disabled={saving}
+                  style={{ fontSize: '14.5px', padding: '12px 24px' }}
+                >
+                  {saving ? 'Wird gespeichert …' : 'Pressemitteilung speichern'}
                 </button>
               </div>
               <div className={`admin-saved${saved ? ' show' : ''}`} role="status" aria-live="polite">

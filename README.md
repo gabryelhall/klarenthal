@@ -13,16 +13,20 @@ Webspace oder zu Netlify/Vercel hochgeladen werden.
 - `src/App.jsx` — Routing (Hash), Sprach-Context, Seitentitel
 - `src/i18n.js` — alle 7 Sprachen (DE Default, AR + FA als RTL)
 - `src/events.js` — fest eingebaute Veranstaltungen (Seed-Daten)
-- `src/storage.js` — Browser-Persistenz für das Admin-Tool
+- `src/storage.js` — Datenschicht: Supabase + localStorage-Cache
+- `src/supabase.js` — Supabase-Verbindung (URL, Publishable-Key, Admin-E-Mail)
 - `src/Icons.jsx` — SVG-Sprite (26 Vektor-Icons), keine Emojis
 - `src/components/` — Header, Footer, Sprachauswahl, Admin-Modal
 - `src/pages/` — die 7 Seiten
 
 ## Admin-Tool
-Footer → „Admin · Veranstaltungen verwalten" → **PIN: 2026**
-PIN ändern: `src/components/AdminModal.jsx`, Konstante `ADMIN_PIN`.
-Hinweis: Speicherung erfolgt im Browser (localStorage) — für eine
-zentrale Lösung für alle Besucher das Framer CMS bzw. ein Backend nutzen.
+Footer → „Admin" (Veranstaltungen bzw. Presse) → **Admin-Passwort**.
+Inhalte (Veranstaltungen, ausgeblendete Seed-Termine, Pressemitteilungen)
+liegen zentral in Supabase und sind für alle Besucher gleich; Bilder und
+PDFs landen im öffentlichen Bucket `media`.
+- Einrichtung: `supabase/setup.sql` im SQL Editor des Supabase-Dashboards ausführen
+- Verbindung + Admin-E-Mail: `src/supabase.js`
+- Admin-Passwort ändern: Supabase-Dashboard → Authentication → Users
 
 ## Vor dem Launch ergänzen
 - Echte Instagram/Facebook-URLs (`src/components/Footer.jsx`)
