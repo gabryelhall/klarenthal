@@ -134,6 +134,10 @@ export default function StartPage() {
               <div className="partner-logo"><img src="assets/partner-wsf.svg" alt="Wiesbaden Stiftung Freunde e.V." loading="lazy" /></div>
               <figcaption>Wiesbaden Stiftung Freunde e.V.</figcaption>
             </figure>
+            <figure className="partner">
+              <div className="partner-logo"><img src="assets/logo_b90_gruene_wiesbaden.png" alt="Logo: Bündnis 90/Die Grünen Wiesbaden" loading="lazy" /></div>
+              <figcaption>Bündnis 90/Die Grünen Wiesbaden</figcaption>
+            </figure>
           </div>
         </div>
       </div>

@@ -66,12 +66,17 @@ export default function DatenschutzPage() {
 
         <h2>6. Spendenfunktion</h2>
         <p>
-          Sofern eine Online-Spendenmöglichkeit (z. B. PayPal) eingebunden wird, erfolgt die
-          Zahlungsabwicklung ausschließlich über den jeweiligen Zahlungsdienstleister. Dabei
-          gelten dessen Datenschutzbestimmungen; die dort eingegebenen Zahlungsdaten werden nicht
-          von uns verarbeitet oder gespeichert. Bei einer Überweisung auf unser Spendenkonto
-          verarbeiten wir die im Verwendungszweck und in den Kontodaten enthaltenen Angaben zur
-          Verbuchung der Spende. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b und lit. f DSGVO.
+          Auf der Seite „Weitere Informationen“ verlinken wir mit einem Spendenbutton auf ein
+          Spendenformular von PayPal (Anbieter: PayPal (Europe) S.à r.l. et Cie, S.C.A.,
+          22-24 Boulevard Royal, L-2449 Luxembourg). Es handelt sich um eine einfache
+          Verlinkung ohne eingebettete Inhalte; eine Datenübertragung an PayPal findet erst
+          statt, wenn Sie den Button aktiv anklicken. Die Zahlungsabwicklung erfolgt dann
+          ausschließlich über PayPal, es gelten dessen Datenschutzbestimmungen; die dort
+          eingegebenen Zahlungsdaten werden nicht von uns verarbeitet oder gespeichert. Von
+          PayPal erhalten wir lediglich die zur Verbuchung der Spende erforderlichen Angaben.
+          Bei einer Überweisung auf unser Spendenkonto verarbeiten wir die im Verwendungszweck
+          und in den Kontodaten enthaltenen Angaben zur Verbuchung der Spende. Rechtsgrundlage
+          ist Art. 6 Abs. 1 lit. b und lit. f DSGVO.
         </p>
 
         <h2>7. Externe Schriften (Google Fonts)</h2>
@@ -117,9 +122,9 @@ export default function DatenschutzPage() {
 
         <p style={note}>
           Hinweis: Dies ist eine an die Funktionen dieser Seite angepasste Vorlage. Sie ist vor
-          Veröffentlichung — insbesondere bei Einbindung der Spendenfunktion oder eines konkreten
-          Hosting-Anbieters — durch die Initiative bzw. das Volksbildungswerk Klarenthal e.V. final
-          zu prüfen und ggf. zu ergänzen.
+          Veröffentlichung — insbesondere hinsichtlich des konkreten Hosting-Anbieters — durch die
+          Initiative bzw. das Volksbildungswerk Klarenthal e.V. final zu prüfen und ggf. zu
+          ergänzen.
         </p>
 
       </div></div>

@@ -47,8 +47,7 @@ export const SEED_EVENTS = [
     type:"past", date:"24.09.2025", title:"Theaterstück „Man muss für Werte eintreten. Der Mord an Walter Lübcke“",
     where:"Stadtteilzentrum Schelmengraben · Westfälisches Landestheater",
     text:"Eine Produktion über die Gefährdung unserer Demokratie und die Bedrohung von Politiker*innen — dem rechtsextremen Mordanschlag auf den hessischen Politiker Walter Lübcke gewidmet.",
-    img:"assets/theater-stage.jpg", alt:"Szene aus dem Theaterstück über den Mord an Walter Lübcke",
-    support:{ text:"Mit Unterstützung von", logo:"assets/logo_b90_gruene_wiesbaden.png", logoAlt:"Logo: Bündnis 90/Die Grünen Wiesbaden" }
+    img:"assets/theater-stage.jpg", alt:"Szene aus dem Theaterstück über den Mord an Walter Lübcke"
   },
   {
     type:"past", date:"25.09.2025", title:"Lesung „Aufstand des Gewissens“ — Sophie Scholl",
