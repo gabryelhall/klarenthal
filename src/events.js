@@ -16,7 +16,7 @@ export const SEED_EVENTS = [
       { src:"assets/demokratiwoche_2026_programm_web.jpg", alt:"Programmflyer der Demokratiewoche 2026 — Seite 1 (u.a. 2. Demokratie-Kick am Fr, 21.08., 16–19 Uhr)" },
       { src:"assets/demokratiwoche_2026_programm_web_2.jpg", alt:"Programmflyer der Demokratiewoche 2026 — Seite 2" }
     ],
-    pdf:"assets/demokratiwoche_2026_programm_web.pdf", pdfLabel:"Programm als PDF herunterladen"
+    pdf:"assets/demokratiwoche_2026_programm_web.pdf", pdfLabelKey:"ev_pdf_prog"
   },
   // ——— Vergangenes (Reihenfolge = Anzeige: Gründung zuerst, danach chronologisch) ———
   {

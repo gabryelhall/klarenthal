@@ -113,6 +113,8 @@ export const I18N = {
     ev_empty_t: "Neue Veranstaltungen sind in Planung.",
     ev_empty_p: "Schau bald wieder vorbei oder folge uns auf Instagram und Facebook, um nichts zu verpassen.",
     ev_more: "Mehr erfahren",
+    ev_pdf: "PDF herunterladen",
+    ev_pdf_prog: "Programm als PDF herunterladen",
 
     // Weitere Informationen
     info_eyebrow: "Weitere Informationen",
@@ -133,6 +135,9 @@ export const I18N = {
     don_bank: "Spendenkonto · Banküberweisung",
     don_btn: "Mit PayPal spenden",
     don_note: "Die Zahlung läuft sicher über PayPal — auch ohne PayPal-Konto per Kreditkarte oder Lastschrift möglich.",
+    don_copy: "Kopieren",
+    don_copied: "✓ Kopiert",
+    don_copy_aria: "IBAN in die Zwischenablage kopieren",
     press_eyebrow: "Pressemitteilungen",
     pr1: "Pressemitteilung: Erste Klarenthaler Demokratiewoche ein voller Erfolg",
 
@@ -143,6 +148,11 @@ export const I18N = {
     foot_privacy: "Datenschutzerklärung",
     foot_made: "Demokratie lebt durch uns alle.",
     lang_title: "Sprache wählen · Choose language",
+    a11y_close: "Schließen",
+    a11y_nav: "Hauptnavigation",
+    a11y_menu_open: "Menü öffnen",
+    a11y_menu_close: "Menü schließen",
+    a11y_lang: "Sprache wählen — Demokratie in sieben Sprachen",
   },
 
   en: {
@@ -254,6 +264,8 @@ export const I18N = {
     ev_empty_t: "New events are being planned.",
     ev_empty_p: "Check back soon or follow us on Instagram and Facebook so you don’t miss anything.",
     ev_more: "Learn more",
+    ev_pdf: "Download PDF",
+    ev_pdf_prog: "Download programme as PDF",
 
     // Weitere Informationen
     info_eyebrow: "More information",
@@ -274,6 +286,9 @@ export const I18N = {
     don_bank: "Donation account · Bank transfer",
     don_btn: "Donate with PayPal",
     don_note: "Payments are handled securely by PayPal — you can also pay by card without a PayPal account.",
+    don_copy: "Copy",
+    don_copied: "✓ Copied",
+    don_copy_aria: "Copy IBAN to clipboard",
     press_eyebrow: "Press releases",
     pr1: "Press release: First Klarenthal Democracy Week a great success",
 
@@ -284,6 +299,11 @@ export const I18N = {
     foot_privacy: "Privacy policy",
     foot_made: "Democracy lives through all of us.",
     lang_title: "Choose language",
+    a11y_close: "Close",
+    a11y_nav: "Main navigation",
+    a11y_menu_open: "Open menu",
+    a11y_menu_close: "Close menu",
+    a11y_lang: "Choose language — democracy in seven languages",
   },
 
   uk: {
@@ -395,6 +415,8 @@ export const I18N = {
     ev_empty_t: "Нові заходи плануються.",
     ev_empty_p: "Завітайте згодом або підпишіться на наш Instagram і Facebook, щоб нічого не пропустити.",
     ev_more: "Докладніше",
+    ev_pdf: "Завантажити PDF",
+    ev_pdf_prog: "Завантажити програму у форматі PDF",
 
     // Weitere Informationen
     info_eyebrow: "Додаткова інформація",
@@ -415,6 +437,9 @@ export const I18N = {
     don_bank: "Рахунок для пожертв · Банківський переказ",
     don_btn: "Пожертвувати через PayPal",
     don_note: "Платіж здійснюється безпечно через PayPal — також карткою, без облікового запису PayPal.",
+    don_copy: "Копіювати",
+    don_copied: "✓ Скопійовано",
+    don_copy_aria: "Скопіювати IBAN у буфер обміну",
     press_eyebrow: "Пресрелізи",
     pr1: "Пресреліз: Перший Тиждень демократії в Кларенталі — великий успіх",
 
@@ -425,6 +450,11 @@ export const I18N = {
     foot_privacy: "Політика конфіденційності",
     foot_made: "Демократія живе завдяки кожному з нас.",
     lang_title: "Оберіть мову",
+    a11y_close: "Закрити",
+    a11y_nav: "Головна навігація",
+    a11y_menu_open: "Відкрити меню",
+    a11y_menu_close: "Закрити меню",
+    a11y_lang: "Обрати мову — демократія сімома мовами",
   },
 
   ru: {
@@ -536,6 +566,8 @@ export const I18N = {
     ev_empty_t: "Новые мероприятия планируются.",
     ev_empty_p: "Загляните позже или подпишитесь на наш Instagram и Facebook, чтобы ничего не пропустить.",
     ev_more: "Подробнее",
+    ev_pdf: "Скачать PDF",
+    ev_pdf_prog: "Скачать программу в формате PDF",
 
     // Weitere Informationen
     info_eyebrow: "Дополнительная информация",
@@ -556,6 +588,9 @@ export const I18N = {
     don_bank: "Счёт для пожертвований · Банковский перевод",
     don_btn: "Пожертвовать через PayPal",
     don_note: "Платёж проходит безопасно через PayPal — также картой, без аккаунта PayPal.",
+    don_copy: "Копировать",
+    don_copied: "✓ Скопировано",
+    don_copy_aria: "Скопировать IBAN в буфер обмена",
     press_eyebrow: "Пресс-релизы",
     pr1: "Пресс-релиз: Первая Неделя демократии в Кларентале — большой успех",
 
@@ -566,6 +601,11 @@ export const I18N = {
     foot_privacy: "Политика конфиденциальности",
     foot_made: "Демократия живёт благодаря каждому из нас.",
     lang_title: "Выберите язык",
+    a11y_close: "Закрыть",
+    a11y_nav: "Основная навигация",
+    a11y_menu_open: "Открыть меню",
+    a11y_menu_close: "Закрыть меню",
+    a11y_lang: "Выбрать язык — демократия на семи языках",
   },
 
   ar: {
@@ -677,6 +717,8 @@ export const I18N = {
     ev_empty_t: "فعاليات جديدة قيد التخطيط.",
     ev_empty_p: "عد قريبًا أو تابعنا على إنستغرام وفيسبوك حتى لا يفوتك شيء.",
     ev_more: "اعرف المزيد",
+    ev_pdf: "تنزيل ملف PDF",
+    ev_pdf_prog: "تنزيل البرنامج بصيغة PDF",
 
     // Weitere Informationen
     info_eyebrow: "معلومات إضافية",
@@ -697,6 +739,9 @@ export const I18N = {
     don_bank: "حساب التبرعات · تحويل بنكي",
     don_btn: "تبرّع عبر PayPal",
     don_note: "تتم عملية الدفع بأمان عبر PayPal — ويمكن الدفع بالبطاقة أيضًا دون حساب PayPal.",
+    don_copy: "نسخ",
+    don_copied: "✓ تم النسخ",
+    don_copy_aria: "نسخ رقم IBAN إلى الحافظة",
     press_eyebrow: "البيانات الصحفية",
     pr1: "بيان صحفي: أول أسبوع للديمقراطية في كلارنتال نجاح كبير",
 
@@ -707,6 +752,11 @@ export const I18N = {
     foot_privacy: "سياسة الخصوصية",
     foot_made: "الديمقراطية تحيا من خلالنا جميعًا.",
     lang_title: "اختر اللغة",
+    a11y_close: "إغلاق",
+    a11y_nav: "التنقل الرئيسي",
+    a11y_menu_open: "فتح القائمة",
+    a11y_menu_close: "إغلاق القائمة",
+    a11y_lang: "اختر اللغة — الديمقراطية بسبع لغات",
   },
 
   tr: {
@@ -818,6 +868,8 @@ export const I18N = {
     ev_empty_t: "Yeni etkinlikler planlanıyor.",
     ev_empty_p: "Yakında tekrar uğra veya hiçbir şeyi kaçırmamak için bizi Instagram ve Facebook'ta takip et.",
     ev_more: "Daha fazla bilgi",
+    ev_pdf: "PDF'i indir",
+    ev_pdf_prog: "Programı PDF olarak indir",
 
     // Weitere Informationen
     info_eyebrow: "Daha fazla bilgi",
@@ -838,6 +890,9 @@ export const I18N = {
     don_bank: "Bağış hesabı · Banka havalesi",
     don_btn: "PayPal ile bağış yap",
     don_note: "Ödeme güvenli şekilde PayPal üzerinden yapılır — PayPal hesabı olmadan kartla da mümkündür.",
+    don_copy: "Kopyala",
+    don_copied: "✓ Kopyalandı",
+    don_copy_aria: "IBAN'ı panoya kopyala",
     press_eyebrow: "Basın bültenleri",
     pr1: "Basın bülteni: İlk Klarenthal Demokrasi Haftası büyük başarı",
 
@@ -848,6 +903,11 @@ export const I18N = {
     foot_privacy: "Gizlilik politikası",
     foot_made: "Demokrasi hepimizle yaşar.",
     lang_title: "Dil seçin",
+    a11y_close: "Kapat",
+    a11y_nav: "Ana gezinme",
+    a11y_menu_open: "Menüyü aç",
+    a11y_menu_close: "Menüyü kapat",
+    a11y_lang: "Dil seç — yedi dilde demokrasi",
   },
 
   fa: {
@@ -959,6 +1019,8 @@ export const I18N = {
     ev_empty_t: "رویدادهای جدید در حال برنامه‌ریزی است.",
     ev_empty_p: "به‌زودی دوباره سر بزن یا ما را در اینستاگرام و فیسبوک دنبال کن تا چیزی را از دست ندهی.",
     ev_more: "بیشتر بدانید",
+    ev_pdf: "دانلود PDF",
+    ev_pdf_prog: "دانلود برنامه به‌صورت PDF",
 
     // Weitere Informationen
     info_eyebrow: "اطلاعات بیشتر",
@@ -979,6 +1041,9 @@ export const I18N = {
     don_bank: "حساب کمک‌های مالی · انتقال بانکی",
     don_btn: "کمک از طریق PayPal",
     don_note: "پرداخت به‌صورت امن از طریق PayPal انجام می‌شود — بدون حساب PayPal نیز با کارت بانکی ممکن است.",
+    don_copy: "کپی",
+    don_copied: "✓ کپی شد",
+    don_copy_aria: "کپی IBAN در کلیپ‌بورد",
     press_eyebrow: "بیانیه‌های مطبوعاتی",
     pr1: "بیانیه مطبوعاتی: نخستین هفته دموکراسی کلارنتال موفقیتی بزرگ",
 
@@ -989,6 +1054,11 @@ export const I18N = {
     foot_privacy: "سیاست حفظ حریم خصوصی",
     foot_made: "دموکراسی با همه ما زنده است.",
     lang_title: "انتخاب زبان",
+    a11y_close: "بستن",
+    a11y_nav: "ناوبری اصلی",
+    a11y_menu_open: "باز کردن منو",
+    a11y_menu_close: "بستن منو",
+    a11y_lang: "انتخاب زبان — دموکراسی به هفت زبان",
   },
 };
 

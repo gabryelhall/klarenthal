@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLang } from '../App.jsx';
 
 /* Schließt das Modal bei Escape — aber nur, solange es offen ist, damit
    die globale Tastenabfrage nicht im Hintergrund hängen bleibt. */
@@ -15,6 +16,7 @@ export function useEscClose(active, onClose) {
    zentriertem Sheet. Geschlossen wird per ×-Button, Klick auf den Hintergrund
    oder Escape. Der eigentliche Inhalt kommt als children. */
 export default function Modal({ label, onClose, children }) {
+  const { t } = useLang();
   useEscClose(true, onClose);
 
   return (
@@ -26,7 +28,7 @@ export default function Modal({ label, onClose, children }) {
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div className="admin-sheet">
-        <button className="admin-close" aria-label="Schließen" onClick={onClose}>×</button>
+        <button className="admin-close" aria-label={t('a11y_close')} onClick={onClose}>×</button>
         {children}
       </div>
     </div>

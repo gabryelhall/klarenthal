@@ -44,7 +44,7 @@ export default function StartPage() {
               <a className="btn btn-ghost" href="#/wer-wir-sind">{t('cta_learn')}</a>
             </div>
           </div>
-          <div className="bubble-cloud" role="group" aria-label="Sprache wählen — Demokratie in sieben Sprachen">
+          <div className="bubble-cloud" role="group" aria-label={t('a11y_lang')}>
             <div className="hero-slogan">Weil <strong>wir</strong> zählen.</div>
             {BUBBLES.map(([lang, word, name, cls]) => (
               <button key={lang} className={`bubble ${cls}`} onClick={() => setLang(lang)}>

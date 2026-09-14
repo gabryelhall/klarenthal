@@ -16,6 +16,7 @@ function allEvents() {
    Veranstaltung), voller Text und — falls hinterlegt — ein PDF-Download.
    Galerie-Einträge sind Strings oder { src, alt }-Objekte. */
 function EventDetail({ event, onClose }) {
+  const { t } = useLang();
   const raw = event.images?.length ? event.images : (event.img ? [event.img] : []);
   const imgs = raw.map((im, i) => typeof im === 'string'
     ? { src: im, alt: i === 0 ? (event.alt || '') : `${event.title} — Bild ${i + 1}` }
@@ -31,7 +32,7 @@ function EventDetail({ event, onClose }) {
         <p>{event.text}</p>
         {event.pdf && (
           <a className="btn btn-orange event-detail-pdf" href={event.pdf} download>
-            <Icon id="i-pdf" /> {event.pdfLabel || 'PDF herunterladen'}
+            <Icon id="i-pdf" /> {t(event.pdfLabelKey || 'ev_pdf')}
           </a>
         )}
         {imgs.map((im) => (

@@ -138,17 +138,17 @@ export default function InfoPage({ version }) {
 
               {/* IBAN bank transfer */}
               <div className="iban-box">
-                <div className="label">Volksbildungswerk Klarenthal e.V.</div>
+                <div className="label">{t('don_bank')}</div>
                 <div className="val">
-                  <span>Naspa</span>
+                  <span>Volksbildungswerk Klarenthal e.V. · Naspa</span>
                   <button
                     className="copy-iban-btn"
                     onClick={copyIban}
-                    title="IBAN kopieren"
-                    aria-label="IBAN in die Zwischenablage kopieren"
+                    title={t('don_copy_aria')}
+                    aria-label={t('don_copy_aria')}
                   >
                     <span className="iban-number">{IBAN}</span>
-                    <span className="copy-hint">{copied ? '✓ Kopiert' : 'Kopieren'}</span>
+                    <span className="copy-hint">{copied ? t('don_copied') : t('don_copy')}</span>
                   </button>
                   <span style={{ fontSize: '12.5px', color: '#A99BC9' }}>BIC: {BIC}</span>
                 </div>

@@ -18,7 +18,7 @@ export default function Header({ route, onLangClick }) {
 
   return (
     <header>
-      <nav className="nav" aria-label="Hauptnavigation">
+      <nav className="nav" aria-label={t('a11y_nav')}>
         <a className="logo" href="#/start" onClick={() => setOpen(false)}>
           <LogoMark className="logo-mark" />
           <div className="logo-text">Klarenthal lebt<br /><span>Demokratie</span></div>
@@ -55,7 +55,7 @@ export default function Header({ route, onLangClick }) {
         {/* Hamburger nur mobil sichtbar (CSS) — klappt die Navigation auf */}
         <button
           className="burger"
-          aria-label={open ? 'Menü schließen' : 'Menü öffnen'}
+          aria-label={open ? t('a11y_menu_close') : t('a11y_menu_open')}
           aria-expanded={open}
           aria-controls="primary-nav"
           onClick={() => setOpen(!open)}
