@@ -30,5 +30,6 @@ PDFs landen im öffentlichen Bucket `media`.
 
 ## Vor dem Launch ergänzen
 - Echte Instagram/Facebook-URLs (`src/components/Footer.jsx`)
-- IBAN + PayPal/Stripe-Button (`src/pages/InfoPage.jsx`)
 - Impressum/Datenschutz juristisch prüfen lassen
+
+IBAN und PayPal-Spendenbutton sind hinterlegt (`src/pages/InfoPage.jsx`).

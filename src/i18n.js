@@ -113,7 +113,6 @@ export const I18N = {
     ev_empty_t: "Neue Veranstaltungen sind in Planung.",
     ev_empty_p: "Schau bald wieder vorbei oder folge uns auf Instagram und Facebook, um nichts zu verpassen.",
     ev_more: "Mehr erfahren",
-    ev_support: "Die Demokratiewoche 2026 wird unterstützt von",
 
     // Weitere Informationen
     info_eyebrow: "Weitere Informationen",
@@ -132,8 +131,8 @@ export const I18N = {
     don_title: "Unterstütze unsere Arbeit",
     don_p: "Jede Spende hilft uns, Veranstaltungen wie die Demokratiewoche, Lesungen, Workshops und Begegnungsformate im Stadtteil zu ermöglichen.",
     don_bank: "Spendenkonto · Banküberweisung",
-    don_btn: "Online spenden",
-    don_note: "Online-Spenden (PayPal/Stripe) werden derzeit eingerichtet.",
+    don_btn: "Mit PayPal spenden",
+    don_note: "Die Zahlung läuft sicher über PayPal — auch ohne PayPal-Konto per Kreditkarte oder Lastschrift möglich.",
     press_eyebrow: "Pressemitteilungen",
     pr1: "Pressemitteilung: Erste Klarenthaler Demokratiewoche ein voller Erfolg",
 
@@ -255,7 +254,6 @@ export const I18N = {
     ev_empty_t: "New events are being planned.",
     ev_empty_p: "Check back soon or follow us on Instagram and Facebook so you don’t miss anything.",
     ev_more: "Learn more",
-    ev_support: "The Democracy Week 2026 is supported by",
 
     // Weitere Informationen
     info_eyebrow: "More information",
@@ -274,8 +272,8 @@ export const I18N = {
     don_title: "Support our work",
     don_p: "Every donation helps us make events like the Democracy Week, readings, workshops and encounter formats possible in the neighbourhood.",
     don_bank: "Donation account · Bank transfer",
-    don_btn: "Donate online",
-    don_note: "Online donations (PayPal/Stripe) are currently being set up.",
+    don_btn: "Donate with PayPal",
+    don_note: "Payments are handled securely by PayPal — you can also pay by card without a PayPal account.",
     press_eyebrow: "Press releases",
     pr1: "Press release: First Klarenthal Democracy Week a great success",
 
@@ -397,7 +395,6 @@ export const I18N = {
     ev_empty_t: "Нові заходи плануються.",
     ev_empty_p: "Завітайте згодом або підпишіться на наш Instagram і Facebook, щоб нічого не пропустити.",
     ev_more: "Докладніше",
-    ev_support: "Тиждень демократії 2026 відбувається за підтримки",
 
     // Weitere Informationen
     info_eyebrow: "Додаткова інформація",
@@ -416,8 +413,8 @@ export const I18N = {
     don_title: "Підтримайте нашу роботу",
     don_p: "Кожна пожертва допомагає проводити Тиждень демократії, читання, воркшопи та зустрічі в районі.",
     don_bank: "Рахунок для пожертв · Банківський переказ",
-    don_btn: "Пожертвувати онлайн",
-    don_note: "Онлайн-пожертви (PayPal/Stripe) наразі налаштовуються.",
+    don_btn: "Пожертвувати через PayPal",
+    don_note: "Платіж здійснюється безпечно через PayPal — також карткою, без облікового запису PayPal.",
     press_eyebrow: "Пресрелізи",
     pr1: "Пресреліз: Перший Тиждень демократії в Кларенталі — великий успіх",
 
@@ -539,7 +536,6 @@ export const I18N = {
     ev_empty_t: "Новые мероприятия планируются.",
     ev_empty_p: "Загляните позже или подпишитесь на наш Instagram и Facebook, чтобы ничего не пропустить.",
     ev_more: "Подробнее",
-    ev_support: "Неделя демократии 2026 проходит при поддержке",
 
     // Weitere Informationen
     info_eyebrow: "Дополнительная информация",
@@ -558,8 +554,8 @@ export const I18N = {
     don_title: "Поддержите нашу работу",
     don_p: "Каждое пожертвование помогает проводить Неделю демократии, чтения, воркшопы и встречи в районе.",
     don_bank: "Счёт для пожертвований · Банковский перевод",
-    don_btn: "Пожертвовать онлайн",
-    don_note: "Онлайн-пожертвования (PayPal/Stripe) в настоящее время настраиваются.",
+    don_btn: "Пожертвовать через PayPal",
+    don_note: "Платёж проходит безопасно через PayPal — также картой, без аккаунта PayPal.",
     press_eyebrow: "Пресс-релизы",
     pr1: "Пресс-релиз: Первая Неделя демократии в Кларентале — большой успех",
 
@@ -681,7 +677,6 @@ export const I18N = {
     ev_empty_t: "فعاليات جديدة قيد التخطيط.",
     ev_empty_p: "عد قريبًا أو تابعنا على إنستغرام وفيسبوك حتى لا يفوتك شيء.",
     ev_more: "اعرف المزيد",
-    ev_support: "يُقام أسبوع الديمقراطية 2026 بدعم من",
 
     // Weitere Informationen
     info_eyebrow: "معلومات إضافية",
@@ -700,8 +695,8 @@ export const I18N = {
     don_title: "ادعم عملنا",
     don_p: "كل تبرع يساعدنا على تنظيم فعاليات مثل أسبوع الديمقراطية والقراءات وورش العمل ولقاءات الحي.",
     don_bank: "حساب التبرعات · تحويل بنكي",
-    don_btn: "تبرع عبر الإنترنت",
-    don_note: "يجري حاليًا إعداد التبرعات عبر الإنترنت (PayPal/Stripe).",
+    don_btn: "تبرّع عبر PayPal",
+    don_note: "تتم عملية الدفع بأمان عبر PayPal — ويمكن الدفع بالبطاقة أيضًا دون حساب PayPal.",
     press_eyebrow: "البيانات الصحفية",
     pr1: "بيان صحفي: أول أسبوع للديمقراطية في كلارنتال نجاح كبير",
 
@@ -823,7 +818,6 @@ export const I18N = {
     ev_empty_t: "Yeni etkinlikler planlanıyor.",
     ev_empty_p: "Yakında tekrar uğra veya hiçbir şeyi kaçırmamak için bizi Instagram ve Facebook'ta takip et.",
     ev_more: "Daha fazla bilgi",
-    ev_support: "Demokrasi Haftası 2026'nın destekçisi",
 
     // Weitere Informationen
     info_eyebrow: "Daha fazla bilgi",
@@ -842,8 +836,8 @@ export const I18N = {
     don_title: "Çalışmamızı destekle",
     don_p: "Her bağış; Demokrasi Haftası, okumalar, atölyeler ve semtteki buluşma etkinliklerini mümkün kılmamıza yardımcı olur.",
     don_bank: "Bağış hesabı · Banka havalesi",
-    don_btn: "Online bağış yap",
-    don_note: "Online bağışlar (PayPal/Stripe) şu anda hazırlanıyor.",
+    don_btn: "PayPal ile bağış yap",
+    don_note: "Ödeme güvenli şekilde PayPal üzerinden yapılır — PayPal hesabı olmadan kartla da mümkündür.",
     press_eyebrow: "Basın bültenleri",
     pr1: "Basın bülteni: İlk Klarenthal Demokrasi Haftası büyük başarı",
 
@@ -965,7 +959,6 @@ export const I18N = {
     ev_empty_t: "رویدادهای جدید در حال برنامه‌ریزی است.",
     ev_empty_p: "به‌زودی دوباره سر بزن یا ما را در اینستاگرام و فیسبوک دنبال کن تا چیزی را از دست ندهی.",
     ev_more: "بیشتر بدانید",
-    ev_support: "هفته دموکراسی ۲۰۲۶ با حمایت",
 
     // Weitere Informationen
     info_eyebrow: "اطلاعات بیشتر",
@@ -984,8 +977,8 @@ export const I18N = {
     don_title: "از کار ما حمایت کن",
     don_p: "هر کمک مالی به ما کمک می‌کند رویدادهایی مانند هفته دموکراسی، کتاب‌خوانی‌ها، کارگاه‌ها و دیدارهای محله را برگزار کنیم.",
     don_bank: "حساب کمک‌های مالی · انتقال بانکی",
-    don_btn: "کمک آنلاین",
-    don_note: "کمک‌های آنلاین (PayPal/Stripe) در حال راه‌اندازی است.",
+    don_btn: "کمک از طریق PayPal",
+    don_note: "پرداخت به‌صورت امن از طریق PayPal انجام می‌شود — بدون حساب PayPal نیز با کارت بانکی ممکن است.",
     press_eyebrow: "بیانیه‌های مطبوعاتی",
     pr1: "بیانیه مطبوعاتی: نخستین هفته دموکراسی کلارنتال موفقیتی بزرگ",
 
