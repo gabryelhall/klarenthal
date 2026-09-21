@@ -494,6 +494,12 @@ footer{background:var(--violett);color:#CFC4E8;padding:56px 0 36px;border-top:6p
 .admin-row .meta strong{display:block;font-size:14.5px;color:var(--violett);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .admin-row .meta span{font-size:12.5px;color:var(--ink-soft)}
 .admin-row .seed-tag{font-size:10.5px;background:#EFE8D9;color:var(--ink-soft);padding:2px 8px;border-radius:99px;font-weight:600;flex-shrink:0}
+.admin-group{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--orange-ink);margin:0 0 2px}
+.admin-row .meta .seed-note{display:block;font-size:12px;margin-top:6px;font-style:italic}
+.section-select{display:block;width:100%;margin-top:8px;font-family:var(--display);font-size:13.5px;color:var(--violett);font-weight:600;background:var(--mineral);border:2px solid transparent;border-radius:10px;padding:8px 10px;cursor:pointer}
+.section-select:focus{outline:none;border-color:var(--orange)}
+.section-select:disabled{opacity:.6;cursor:wait}
+.admin-form .section-select{font-size:14.5px;padding:11px 14px;margin-top:0}
 .btn-del{background:#FCEBEB;border:none;border-radius:10px;width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .btn-del .icon{font-size:18px;color:#A32D2D}
 .btn-del:hover{background:#F5C9C9}

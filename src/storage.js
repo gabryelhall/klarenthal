@@ -91,6 +91,17 @@ export async function addEvent(ev) {
   saveCache();
 }
 
+/* Bereich einer Veranstaltung ändern: 'auto' (nach Datum),
+   'pin-future' oder 'pin-past' (siehe eventSection.js). */
+export async function updateEventType(id, type) {
+  const { data: updated, error } = await supabase.from('events').update({ type }).eq('id', id).select('id');
+  if (error) throw error;
+  // Ohne passende Update-Regel (RLS) meldet Supabase keinen Fehler, ändert aber nichts.
+  if (!updated.length) throw new Error('Keine Berechtigung zum Ändern');
+  data.events = data.events.map((e) => (e.id === id ? { ...e, type } : e));
+  saveCache();
+}
+
 // Öffentliche Bucket-URL → Pfad innerhalb des Buckets (fürs Aufräumen)
 const urlToPath = (u) => {
   const p = typeof u === 'string' ? u.split(`/object/public/${BUCKET}/`)[1] : undefined;

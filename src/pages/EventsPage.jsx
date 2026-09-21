@@ -3,6 +3,7 @@ import { useLang } from '../App.jsx';
 import { Icon } from '../Icons.jsx';
 import { SEED_EVENTS } from '../events.js';
 import { loadCustom, loadRemoved, seedId } from '../storage.js';
+import { sectionOf, sortByDate } from '../eventSection.js';
 import Modal from '../components/Modal.jsx';
 
 // Eigene Veranstaltungen + Seed-Termine, abzüglich der im Admin ausgeblendeten.
@@ -46,7 +47,9 @@ export default function EventsPage({ version }) {
   const { t } = useLang();
   const [filter, setFilter] = useState('future'); // Tab: 'future' | 'past'
   const [detail, setDetail] = useState(null); // angeklickte Veranstaltung (Detail-Overlay)
-  const list = allEvents().filter((e) => e.type === filter); // version-Prop erzwingt Re-Render nach Admin-Änderungen
+  // Tab-Zuordnung und Reihenfolge nach Datum (bzw. im Admin fest gewählt).
+  // Der version-Prop erzwingt ein Re-Render nach Admin-Änderungen.
+  const list = sortByDate(allEvents().filter((e) => sectionOf(e) === filter), filter);
 
   return (
     <section className="page visible" data-version={version}>

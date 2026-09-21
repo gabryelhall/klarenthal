@@ -9,6 +9,8 @@
 create table if not exists public.events (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
+  -- 'auto' = Tab nach Datum; 'pin-future' / 'pin-past' = fest gewählt
+  -- (ältere Einträge mit 'future'/'past' werden ebenfalls nach Datum sortiert)
   type text not null default 'future',
   title text not null,
   date_text text not null,

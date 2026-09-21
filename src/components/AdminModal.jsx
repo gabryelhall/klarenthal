@@ -1,13 +1,30 @@
 import { useState } from 'react';
 import { Icon } from '../Icons.jsx';
 import { SEED_EVENTS } from '../events.js';
-import { loadCustom, loadRemoved, addEvent, deleteEvent, hideSeed, uploadImage, seedId } from '../storage.js';
+import { loadCustom, loadRemoved, addEvent, deleteEvent, hideSeed, uploadImage, seedId, updateEventType } from '../storage.js';
+import { sectionOf, sortByDate, isPinned, parseEventDate, AUTO, PIN_FUTURE, PIN_PAST } from '../eventSection.js';
 import Modal from './Modal.jsx';
 import LoginGate from './LoginGate.jsx';
 import FileDrop from './FileDrop.jsx';
 
 /* Längste Bildkante in Pixel — verkleinert große Uploads vor dem Hochladen. */
 const MAX_EDGE = 1600;
+
+const SECTION_LABEL = { future: 'Zukünftiges', past: 'Vergangenes' };
+
+/* Auswahl, in welchem Tab eine Veranstaltung erscheint. „Automatisch“ zeigt
+   gleich mit an, wohin das Datum sie gerade einsortiert. */
+function SectionSelect({ id, date, value, onChange, disabled, label }) {
+  const autoTarget = SECTION_LABEL[sectionOf({ type: AUTO, date })];
+  return (
+    <select id={id} className="section-select" value={value} disabled={disabled}
+      onChange={(e) => onChange(e.target.value)} aria-label={label}>
+      <option value={AUTO}>Automatisch nach Datum ({autoTarget})</option>
+      <option value={PIN_FUTURE}>Immer unter „Zukünftiges“</option>
+      <option value={PIN_PAST}>Immer unter „Vergangenes“</option>
+    </select>
+  );
+}
 
 export default function AdminModal({ open, onClose, onChanged }) {
   const [unlocked, setUnlocked] = useState(false);
@@ -24,6 +41,13 @@ export default function AdminModal({ open, onClose, onChanged }) {
   const [imgList, setImgList] = useState([]);
   const [imgBusy, setImgBusy] = useState(false);
   const [imgError, setImgError] = useState('');
+
+  // Bereich im Formular (Standard: automatisch nach Datum) und wohin die
+  // zuletzt gespeicherte Veranstaltung einsortiert wurde (für die Meldung).
+  const [formDate, setFormDate] = useState('');
+  const [formType, setFormType] = useState(AUTO);
+  const [savedSection, setSavedSection] = useState('future');
+  const [busyRow, setBusyRow] = useState(null); // id der Zeile, deren Bereich gerade gespeichert wird
 
   // Eine Bilddatei einlesen und auf die längste Kante herunterskalieren.
   // Gibt ein Promise mit der JPEG-Data-URL zurück.
@@ -70,14 +94,31 @@ export default function AdminModal({ open, onClose, onChanged }) {
 
   if (!open) return null;
 
-  // Verwaltbare Liste: eigene Veranstaltungen zuerst, dann die noch nicht
-  // ausgeblendeten zukünftigen Seed-Termine.
+  // Verwaltbare Liste: alle eigenen Veranstaltungen plus die noch nicht
+  // ausgeblendeten zukünftigen Seed-Termine — getrennt nach Bereich und
+  // sortiert wie auf der Veranstaltungsseite.
   const rows = [
-    ...loadCustom().map((e) => ({ title: e.title, date: e.date, custom: true, id: e.id })),
+    ...loadCustom().map((e) => ({ title: e.title, date: e.date, type: e.type, custom: true, id: e.id })),
     ...SEED_EVENTS
-      .filter((e) => e.type === 'future' && !loadRemoved().includes(seedId(e)))
-      .map((e) => ({ title: e.title, date: e.date, custom: false, sid: seedId(e) })),
+      .filter((e) => sectionOf(e) === 'future' && !loadRemoved().includes(seedId(e)))
+      .map((e) => ({ title: e.title, date: e.date, type: e.type, custom: false, sid: seedId(e) })),
   ];
+  const groups = ['future', 'past'].map((sec) => ({
+    sec,
+    rows: sortByDate(rows.filter((r) => sectionOf(r) === sec), sec),
+  }));
+
+  const changeSection = async (r, type) => {
+    setBusyRow(r.id);
+    try {
+      await updateEventType(r.id, type);
+      refresh();
+    } catch {
+      window.alert('Ändern fehlgeschlagen — bitte Internetverbindung prüfen und erneut versuchen.');
+    } finally {
+      setBusyRow(null);
+    }
+  };
 
   const removeRow = async (r) => {
     if (!window.confirm(`„${r.title}“ wirklich entfernen?`)) return;
@@ -99,7 +140,7 @@ export default function AdminModal({ open, onClose, onChanged }) {
     if (saving) return;
     const f = e.target;
     const ev = {
-      type: 'future',
+      type: formType,
       title: f.aTitle.value.trim(),
       date: f.aDate.value.trim(),
       where: f.aWhere.value.trim() || 'Klarenthal',
@@ -120,6 +161,9 @@ export default function AdminModal({ open, onClose, onChanged }) {
       }
       await addEvent(ev);
       f.reset();
+      setSavedSection(sectionOf(ev));
+      setFormDate('');
+      setFormType(AUTO);
       setImgList([]);
       setSaved(true);
       setTimeout(() => setSaved(false), 3500);
@@ -142,29 +186,46 @@ export default function AdminModal({ open, onClose, onChanged }) {
         <div>
           <h3><Icon id="i-cal" /> Veranstaltungen verwalten</h3>
           <p className="admin-sub">
-            Zukünftige Veranstaltungen hinzufügen oder entfernen. Änderungen werden zentral
-            gespeichert und sind sofort für alle Besucher der Webseite sichtbar.
+            Veranstaltungen hinzufügen, verschieben oder entfernen. Sie landen automatisch
+            nach ihrem Datum unter „Zukünftiges“ oder „Vergangenes“ und wandern nach dem
+            Termin von selbst weiter. Änderungen sind sofort für alle Besucher sichtbar.
           </p>
 
-          {/* Bestehende zukünftige Veranstaltungen zum Entfernen */}
-          <div className="admin-list">
-            {rows.length === 0 && (
-              <p style={{ fontSize: 14, color: 'var(--ink-soft)' }}>
-                Keine zukünftigen Veranstaltungen vorhanden.
-              </p>
-            )}
-            {rows.map((r, i) => (
-              <div className="admin-row" key={i}>
-                <div className="meta">
-                  <strong>{r.title}</strong>
-                  <span>{r.date}</span>
+          {/* Bestehende Veranstaltungen, nach Bereich gruppiert */}
+          {groups.map(({ sec, rows: list }) => (
+            <div className="admin-list" key={sec}>
+              <h4 className="admin-group">{SECTION_LABEL[sec]}</h4>
+              {list.length === 0 && (
+                <p style={{ fontSize: 14, color: 'var(--ink-soft)' }}>
+                  {sec === 'future'
+                    ? 'Keine zukünftigen Veranstaltungen vorhanden.'
+                    : 'Noch keine selbst angelegten vergangenen Veranstaltungen.'}
+                </p>
+              )}
+              {list.map((r) => (
+                <div className="admin-row" key={r.custom ? r.id : r.sid}>
+                  <div className="meta">
+                    <strong>{r.title}</strong>
+                    <span>{r.date}</span>
+                    {r.custom ? (
+                      <SectionSelect
+                        date={r.date}
+                        label={`Bereich für „${r.title}“`}
+                        value={isPinned(r) ? r.type : AUTO}
+                        disabled={busyRow === r.id}
+                        onChange={(type) => changeSection(r, type)}
+                      />
+                    ) : (
+                      <span className="seed-note">Fest eingebaut · wandert automatisch nach dem Datum</span>
+                    )}
+                  </div>
+                  <button className="btn-del" aria-label="Veranstaltung löschen" title="Löschen" onClick={() => removeRow(r)}>
+                    <Icon id="i-trash" />
+                  </button>
                 </div>
-                <button className="btn-del" aria-label="Veranstaltung löschen" title="Löschen" onClick={() => removeRow(r)}>
-                  <Icon id="i-trash" />
-                </button>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ))}
 
           {/* Formular für eine neue Veranstaltung */}
           <div className="admin-form">
@@ -173,7 +234,19 @@ export default function AdminModal({ open, onClose, onChanged }) {
               <label htmlFor="aTitle">Titel *</label>
               <input id="aTitle" name="aTitle" required maxLength={120} placeholder="z.B. 2. Klarenthaler Demokratiewoche" />
               <label htmlFor="aDate">Datum *</label>
-              <input id="aDate" name="aDate" required maxLength={40} placeholder="z.B. 21.09.2026 oder Herbst 2026" />
+              <input
+                id="aDate" name="aDate" required maxLength={40} placeholder="z.B. 21.09.2026 oder Herbst 2026"
+                value={formDate} onChange={(e) => setFormDate(e.target.value)}
+              />
+              <label htmlFor="aSection">Bereich</label>
+              <SectionSelect id="aSection" date={formDate} value={formType} onChange={setFormType} />
+              {formType === AUTO && formDate.trim() && !parseEventDate(formDate) && (
+                <p className="img-status">
+                  Datum nicht erkannt — die Veranstaltung erscheint unter „Zukünftiges“.
+                  Für automatisches Einsortieren z.B. „21.09.2026“ oder „September 2026“ eingeben
+                  oder den Bereich fest wählen.
+                </p>
+              )}
               <label htmlFor="aWhere">Ort</label>
               <input id="aWhere" name="aWhere" maxLength={120} placeholder="z.B. Stadtteilzentrum Klarenthal" />
               <label htmlFor="aText">Beschreibung *</label>
@@ -221,7 +294,7 @@ export default function AdminModal({ open, onClose, onChanged }) {
                 </button>
               </div>
               <div className={`admin-saved${saved ? ' show' : ''}`} role="status" aria-live="polite">
-                Gespeichert! Die Veranstaltung ist jetzt unter „Zukünftiges“ sichtbar.
+                Gespeichert! Die Veranstaltung ist jetzt unter „{SECTION_LABEL[savedSection]}“ sichtbar.
               </div>
             </form>
           </div>
